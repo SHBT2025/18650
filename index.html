@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#1a1a1a">
-<meta name="color-scheme" content="light dark">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="电池管理">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="application-name" content="电池管理">
-<meta name="description" content="18650 锂电池内阻管理器 - 测量和跟踪电池内阻">
+<meta charset="UTF-8" />
+<!-- PWA Meta Tags -->
+
+
+
+
+
+
+
+
+
+
 
 <!-- PWA Manifest -->
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="manifest.json" />
 
 <!-- Icons -->
-<link rel="icon" type="image/png" href="192.png" sizes="192x192">
-<link rel="icon" type="image/png" href="512.png" sizes="512x512">
-<link rel="apple-touch-icon" href="192.png">
-<link rel="apple-touch-icon" sizes="192x192" href="192.png">
-<link rel="apple-touch-icon" sizes="512x512" href="512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="tubiao192.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="512x512" href="app512.png" />
 
-<!-- MS Tile (Windows) -->
-<meta name="msapplication-TileColor" content="#1a1a1a">
-<meta name="msapplication-TileImage" content="192.png">
 
-<title>电池管理器 | 18650 内阻追踪</title>
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Battery" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="application-name" content="Battery Manager" />
+<meta name="msapplication-TileColor" content="#1a1a1a" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="theme-color" content="#1a1a1a" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>Battery Manager</title>
 <style>
   :root {
     --line: #1a1a1a;
@@ -37,468 +44,144 @@
     --ink-soft: #666;
     --ink-xsoft: #a8a8a8;
     --accent: #1a1a1a;
-    --safe-area-top: env(safe-area-inset-top, 0px);
-    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
   }
-  
   * { box-sizing: border-box; }
-  
-  html {
-    -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: transparent;
-  }
-  
   html, body {
-    margin: 0;
-    padding: 0;
+    margin: 0; padding: 0;
     background: var(--bg);
     color: var(--ink);
     font-family: "JetBrains Mono", "SF Mono", "Consolas", "Menlo", monospace;
     font-size: 16px;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
-    overscroll-behavior: none;
-    min-height: 100vh;
-    min-height: 100dvh;
   }
-  
-  .app {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 48px 32px 88px;
-    padding-top: calc(48px + var(--safe-area-top));
-    padding-bottom: calc(88px + var(--safe-area-bottom));
-  }
+  .app { max-width: 1080px; margin: 0 auto; padding: 48px 32px 88px; }
 
   /* ---------- Header ---------- */
   header.top {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    padding-bottom: 18px;
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 32px;
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding-bottom: 18px; border-bottom: 1px solid var(--line); margin-bottom: 32px;
   }
-  header.top h1 {
-    margin: 0;
-    font-size: 22px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  header.top .meta {
-    font-size: 13px;
-    color: var(--ink-soft);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
+  header.top h1 { margin: 0; font-size: 22px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
+  header.top .meta { font-size: 13px; color: var(--ink-soft); letter-spacing: 0.1em; text-transform: uppercase; }
 
   /* ---------- Toolbar ---------- */
-  .toolbar {
-    display: flex;
-    gap: 14px;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 28px;
-  }
-  .name-field {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .name-field label {
-    font-size: 13px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
+  .toolbar { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-bottom: 28px; }
+  .name-field { display: flex; align-items: center; gap: 10px; }
+  .name-field label { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
   .name-field input {
-    width: 96px;
-    padding: 10px 12px;
-    border: 1px solid var(--line);
-    background: transparent;
-    color: var(--ink);
-    font-family: inherit;
-    font-size: 16px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    text-align: center;
-    outline: none;
-    border-radius: 0;
-    -webkit-appearance: none;
-    border-radius: 0;
+    width: 96px; padding: 10px 12px; border: 1px solid var(--line);
+    background: transparent; color: var(--ink); font-family: inherit;
+    font-size: 16px; letter-spacing: 0.2em; text-transform: uppercase; text-align: center; outline: none; border-radius: 0;
   }
-  .name-field input:focus {
-    border-style: dashed;
-  }
-  .name-field input::placeholder {
-    color: var(--ink-xsoft);
-    letter-spacing: 0.2em;
-  }
+  .name-field input:focus { border-style: dashed; }
+  .name-field input::placeholder { color: var(--ink-xsoft); letter-spacing: 0.2em; }
 
   .btn {
-    appearance: none;
-    -webkit-appearance: none;
-    background: transparent;
-    border: 1px solid var(--line);
-    color: var(--ink);
-    font-family: inherit;
-    font-size: 14px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 11px 20px;
-    cursor: pointer;
-    border-radius: 0;
-    transition: background 0.15s, color 0.15s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+    appearance: none; background: transparent; border: 1px solid var(--line); color: var(--ink);
+    font-family: inherit; font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 11px 20px; cursor: pointer; border-radius: 0; transition: background 0.15s, color 0.15s;
+    display: inline-flex; align-items: center; gap: 8px;
   }
-  .btn:hover, .btn:active {
-    background: var(--line);
-    color: var(--bg);
-  }
-  .btn:active {
-    transform: scale(0.98);
-  }
-  .btn .plus {
-    font-size: 18px;
-    line-height: 1;
-  }
-  .btn-ghost {
-    border-color: var(--line-soft);
-    color: var(--ink-soft);
-  }
-  .btn-ghost:hover, .btn-ghost:active {
-    background: var(--line-soft);
-    color: var(--ink);
-  }
-  .btn-mini {
-    padding: 7px 12px;
-    font-size: 12px;
-    letter-spacing: 0.15em;
-  }
-  .btn-mini .plus {
-    font-size: 14px;
-  }
+  .btn:hover { background: var(--line); color: var(--bg); }
+  .btn .plus { font-size: 18px; line-height: 1; }
+  .btn-ghost { border-color: var(--line-soft); color: var(--ink-soft); }
+  .btn-ghost:hover { background: var(--line-soft); color: var(--ink); }
+  .btn-mini { padding: 7px 12px; font-size: 12px; letter-spacing: 0.15em; }
+  .btn-mini .plus { font-size: 14px; }
 
   /* ---------- Panels ---------- */
-  .panel {
-    border: 1px solid var(--line);
-    padding: 26px 28px;
-    margin-bottom: 32px;
-    display: none;
-    position: relative;
-    z-index: 10;
-  }
-  .panel.open {
-    display: block;
-  }
-  .panel-title {
-    font-size: 13px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    margin: 0 0 20px;
-  }
-  .panel-title b {
-    color: var(--ink);
-    font-weight: 500;
-  }
+  .panel { border: 1px solid var(--line); padding: 26px 28px; margin-bottom: 32px; display: none; }
+  .panel.open { display: block; }
+  .panel-title { font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 20px; }
+  .panel-title b { color: var(--ink); font-weight: 500; }
 
-  .mode-switch {
-    display: inline-flex;
-    border: 1px solid var(--line-soft);
-    margin-bottom: 20px;
-  }
+  .mode-switch { display: inline-flex; border: 1px solid var(--line-soft); margin-bottom: 20px; }
   .mode-switch button {
-    appearance: none;
-    -webkit-appearance: none;
-    background: transparent;
-    border: none;
-    padding: 9px 18px;
-    font-family: inherit;
-    font-size: 13px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    cursor: pointer;
-    border-right: 1px solid var(--line-soft);
-    -webkit-tap-highlight-color: transparent;
+    appearance: none; background: transparent; border: none; padding: 9px 18px;
+    font-family: inherit; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink-soft); cursor: pointer; border-right: 1px solid var(--line-soft);
   }
-  .mode-switch button:last-child {
-    border-right: none;
-  }
-  .mode-switch button.active {
-    background: var(--line);
-    color: var(--bg);
-  }
+  .mode-switch button:last-child { border-right: none; }
+  .mode-switch button.active { background: var(--line); color: var(--bg); }
 
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-  .form-grid.cols-1 {
-    grid-template-columns: 1fr;
-  }
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-  }
-  .field label {
-    font-size: 12px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
-  .field label .u {
-    margin-left: 6px;
-    color: var(--ink-xsoft);
-  }
+  .form-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px; }
+  .form-grid.cols-1 { grid-template-columns: 1fr; }
+  .field { display: flex; flex-direction: column; gap: 7px; }
+  .field label { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-soft); }
+  .field label .u { margin-left: 6px; color: var(--ink-xsoft); }
   .field input {
-    border: 1px solid var(--line-soft);
-    background: transparent;
-    color: var(--ink);
-    font-family: inherit;
-    font-size: 17px;
-    padding: 11px 12px;
-    outline: none;
-    border-radius: 0;
-    -webkit-appearance: none;
-    border-radius: 0;
+    border: 1px solid var(--line-soft); background: transparent; color: var(--ink);
+    font-family: inherit; font-size: 17px; padding: 11px 12px; outline: none; border-radius: 0;
   }
-  .field input:focus {
-    border-color: var(--line);
-    border-style: dashed;
-  }
-  /* 修复 iOS 输入框样式 */
-  .field input[type="number"] {
-    -webkit-text-fill-color: var(--ink);
-  }
-  .form-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-  }
+  .field input:focus { border-color: var(--line); border-style: dashed; }
+  .form-actions { display: flex; gap: 12px; justify-content: flex-end; }
 
   /* ---------- Cards ---------- */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
   .card {
-    border: 1px solid var(--line);
-    background: #ffffff;
-    position: relative;
-    padding: 22px 22px 16px;
-    display: flex;
-    flex-direction: column;
+    border: 1px solid var(--line); background: #ffffff; position: relative; padding: 22px 22px 16px;
+    display: flex; flex-direction: column;
   }
   .card .tag {
-    position: absolute;
-    top: -1px;
-    left: -1px;
-    color: var(--bg);
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    padding: 4px 10px;
-    text-transform: uppercase;
-    cursor: pointer;
-    user-select: none;
+    position: absolute; top: -1px; left: -1px;
+    color: var(--bg); font-size: 12px; letter-spacing: 0.18em;
+    padding: 4px 10px; text-transform: uppercase;
+    cursor: pointer; user-select: none;
     transition: filter 0.12s;
-    -webkit-tap-highlight-color: transparent;
   }
-  .card .tag:hover {
-    filter: brightness(1.15);
-  }
+  .card .tag:hover { filter: brightness(1.15); }
   .card .tag::after {
-    content: " ▾";
-    font-size: 9px;
-    opacity: 0.7;
-    margin-left: 3px;
+    content: " ▾"; font-size: 9px; opacity: 0.7; margin-left: 3px;
   }
   .card .id {
-    font-size: 12px;
-    color: var(--ink-soft);
-    letter-spacing: 0.1em;
-    margin-top: 24px;
-    text-transform: uppercase;
+    font-size: 12px; color: var(--ink-soft); letter-spacing: 0.1em;
+    margin-top: 24px; text-transform: uppercase;
   }
-  .card .id .dot {
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    background: var(--line);
-    border-radius: 50%;
-    margin-right: 7px;
-    vertical-align: middle;
-  }
-  .card .name {
-    font-size: 30px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    margin: 4px 0 16px;
-    text-transform: uppercase;
-  }
-  .card .latest {
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    padding: 12px 0;
-    margin-bottom: 14px;
-  }
-  .card .latest .k {
-    font-size: 12px;
-    color: var(--ink-soft);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-  .card .latest .v {
-    font-size: 26px;
-    font-weight: 500;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.02em;
-  }
-  .card .latest .sub {
-    font-size: 12px;
-    color: var(--ink-soft);
-    letter-spacing: 0.06em;
-    margin-top: 4px;
-  }
+  .card .id .dot { display: inline-block; width: 7px; height: 7px; background: var(--line); border-radius: 50%; margin-right: 7px; vertical-align: middle; }
+  .card .name { font-size: 30px; font-weight: 500; letter-spacing: 0.18em; margin: 4px 0 16px; text-transform: uppercase; }
+  .card .latest { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 0; margin-bottom: 14px; }
+  .card .latest .k { font-size: 12px; color: var(--ink-soft); letter-spacing: 0.12em; text-transform: uppercase; }
+  .card .latest .v { font-size: 26px; font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+  .card .latest .sub { font-size: 12px; color: var(--ink-soft); letter-spacing: 0.06em; margin-top: 4px; }
 
   .card .history-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-soft);
     margin-bottom: 8px;
   }
-  .card .history-head .count {
-    color: var(--ink);
-  }
-  .card .hist {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    max-height: 200px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+  .card .history-head .count { color: var(--ink); }
+  .card .hist { list-style: none; margin: 0; padding: 0; max-height: 200px; overflow-y: auto; }
   .card .hist li {
-    display: grid;
-    grid-template-columns: 1fr auto auto auto;
-    gap: 8px;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px dashed var(--line-xsoft);
-    font-size: 13px;
-    font-variant-numeric: tabular-nums;
+    display: grid; grid-template-columns: 1fr auto auto auto; gap: 8px; align-items: center;
+    padding: 8px 0; border-bottom: 1px dashed var(--line-xsoft);
+    font-size: 13px; font-variant-numeric: tabular-nums;
   }
-  .card .hist li:last-child {
-    border-bottom: none;
-  }
-  .card .hist .ts {
-    color: var(--ink-soft);
-    letter-spacing: 0.04em;
-  }
-  .card .hist .mode {
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    padding: 2px 6px;
-    border: 1px solid var(--line-soft);
-    color: var(--ink-soft);
-    text-transform: uppercase;
-  }
-  .card .hist .mode.calc {
-    color: var(--ink);
-    border-color: var(--line);
-  }
-  .card .hist .rint {
-    font-weight: 500;
-  }
-  .card .hist .rm {
-    appearance: none;
-    -webkit-appearance: none;
-    background: transparent;
-    border: none;
-    color: var(--ink-xsoft);
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 1;
-    padding: 0 2px;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .card .hist .rm:hover, .card .hist .rm:active {
-    color: var(--line);
-  }
-  .card .hist-empty {
-    font-size: 12px;
-    color: var(--ink-xsoft);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 10px 0 4px;
-  }
+  .card .hist li:last-child { border-bottom: none; }
+  .card .hist .ts { color: var(--ink-soft); letter-spacing: 0.04em; }
+  .card .hist .mode { font-size: 10px; letter-spacing: 0.18em; padding: 2px 6px; border: 1px solid var(--line-soft); color: var(--ink-soft); text-transform: uppercase; }
+  .card .hist .mode.calc { color: var(--ink); border-color: var(--line); }
+  .card .hist .rint { font-weight: 500; }
+  .card .hist .rm { appearance: none; background: transparent; border: none; color: var(--ink-xsoft); cursor: pointer; font-size: 16px; line-height: 1; padding: 0 2px; }
+  .card .hist .rm:hover { color: var(--line); }
+  .card .hist-empty { font-size: 12px; color: var(--ink-xsoft); letter-spacing: 0.15em; text-transform: uppercase; padding: 10px 0 4px; }
 
-  .card .test-panel {
-    border-top: 1px dashed var(--line-soft);
-    margin-top: 12px;
-    padding-top: 14px;
-    display: none;
-  }
-  .card .test-panel.open {
-    display: block;
-  }
-  .card .test-panel .mode-switch {
-    margin-bottom: 14px;
-  }
-  .card .test-panel .form-grid {
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-  .card .test-panel .form-grid[data-cg] {
-    grid-template-columns: 1fr;
-  }
-  .card .test-panel .field input {
-    font-size: 15px;
-    padding: 9px 10px;
-  }
-  .card .test-panel .form-actions {
-    gap: 8px;
-  }
-  .card .test-panel .form-actions .btn {
-    padding: 8px 12px;
-    font-size: 12px;
-  }
-  .card .add-test {
-    margin-top: 12px;
-    display: flex;
-    gap: 8px;
-  }
+  .card .test-panel { border-top: 1px dashed var(--line-soft); margin-top: 12px; padding-top: 14px; display: none; }
+  .card .test-panel.open { display: block; }
+  .card .test-panel .mode-switch { margin-bottom: 14px; }
+  .card .test-panel .form-grid { gap: 12px; margin-bottom: 12px; }
+  .card .test-panel .form-grid[data-cg] { grid-template-columns: 1fr; }
+  .card .test-panel .field input { font-size: 15px; padding: 9px 10px; }
+  .card .test-panel .form-actions { gap: 8px; }
+  .card .test-panel .form-actions .btn { padding: 8px 12px; font-size: 12px; }
+  .card .add-test { margin-top: 12px; display: flex; gap: 8px; }
 
   .card .del {
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    background: transparent;
-    border: none;
-    color: var(--ink-soft);
-    cursor: pointer;
-    font-size: 20px;
-    line-height: 1;
-    padding: 2px 4px;
-    -webkit-tap-highlight-color: transparent;
+    position: absolute; top: 10px; right: 12px;
+    background: transparent; border: none; color: var(--ink-soft); cursor: pointer;
+    font-size: 20px; line-height: 1; padding: 2px 4px;
   }
-  .card .del:hover, .card .del:active {
-    color: var(--line);
-  }
+  .card .del:hover { color: var(--line); }
 
   /* ---------- Color popover ---------- */
   .color-popover {
@@ -523,248 +206,207 @@
     margin-bottom: 3px;
   }
   .color-swatch {
-    width: 30px;
-    height: 30px;
+    width: 30px; height: 30px;
     cursor: pointer;
     position: relative;
     border: 1px solid rgba(0,0,0,0.06);
     transition: transform 0.1s;
-    -webkit-tap-highlight-color: transparent;
   }
-  .color-swatch:hover, .color-swatch:active {
-    transform: scale(1.08);
-  }
-  .color-swatch.active {
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.4);
-  }
+  .color-swatch:hover { transform: scale(1.08); }
+  .color-swatch.active { box-shadow: inset 0 0 0 1px rgba(0,0,0,0.4); }
   .color-swatch.active::after {
     content: "✓";
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 15px; font-weight: 700;
     color: #fff;
     mix-blend-mode: difference;
     line-height: 1;
   }
 
   .empty {
-    text-align: center;
-    color: var(--ink-soft);
-    font-size: 14px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 70px 0;
-    border: 1px dashed var(--line-soft);
+    text-align: center; color: var(--ink-soft);
+    font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 70px 0; border: 1px dashed var(--line-soft);
   }
-  .empty b {
-    color: var(--ink);
-    font-weight: 500;
-  }
+  .empty b { color: var(--ink); font-weight: 500; }
 
   footer.bot {
-    margin-top: 40px;
-    padding-top: 16px;
+    margin-top: 40px; padding-top: 16px;
     border-top: 1px solid var(--line-soft);
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    padding-bottom: var(--safe-area-bottom);
+    display: flex; justify-content: space-between;
+    font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-soft);
   }
 
-  /* ---------- PWA Install Banner ---------- */
-  .install-banner {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--line);
-    color: var(--bg);
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    z-index: 100;
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
-    padding-bottom: calc(14px + var(--safe-area-bottom));
+  .header-actions { display: flex; gap: 8px; align-items: center; }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--line); color: var(--bg); padding: 12px 24px;
+    font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+    z-index: 100; opacity: 0; transition: opacity 0.3s;
+    pointer-events: none;
   }
-  .install-banner.show {
-    transform: translateY(0);
-  }
-  .install-banner-text {
-    font-size: 13px;
-    letter-spacing: 0.1em;
-  }
-  .install-banner .btn {
-    background: var(--bg);
-    color: var(--line);
-    border-color: var(--bg);
-    flex-shrink: 0;
-  }
-  .install-banner .btn:hover {
-    background: var(--line-soft);
-    color: var(--bg);
-  }
-  .install-banner .dismiss {
-    background: transparent;
-    border: none;
-    color: var(--ink-soft);
-    cursor: pointer;
-    font-size: 20px;
-    padding: 4px 8px;
-    -webkit-tap-highlight-color: transparent;
+  .toast.show { opacity: 1; }
+  .toast.error { background: #c5392a; }
+  .toast.success { background: #2e7d32; }
+
+  @media (max-width: 600px) {
+    .form-grid, .form-grid.cols-1 { grid-template-columns: 1fr; }
+    header.top { flex-direction: column; align-items: flex-start; gap: 4px; }
   }
 
-  /* ---------- Mobile Responsive ---------- */
+
+  /* ========== Mobile Optimizations ========== */
   @media (max-width: 600px) {
     .app {
       padding: 24px 16px 100px;
-      padding-top: calc(24px + var(--safe-area-top));
-      padding-bottom: calc(100px + var(--safe-area-bottom));
-    }
-    
-    .form-grid,
-    .form-grid.cols-1 {
-      grid-template-columns: 1fr;
     }
     
     header.top {
       flex-direction: column;
       align-items: flex-start;
       gap: 4px;
+      margin-bottom: 24px;
+    }
+    
+    header.top h1 {
+      font-size: 18px;
     }
     
     .toolbar {
       gap: 10px;
     }
     
-    .toolbar .btn {
+    .name-field {
+      width: 100%;
+    }
+    
+    .name-field input {
+      flex: 1;
+      width: auto;
+    }
+    
+    .btn {
       padding: 12px 16px;
       font-size: 13px;
     }
     
-    .name-field input {
-      width: 80px;
-    }
-    
     .grid {
       grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    
+    .card {
+      padding: 18px 16px 14px;
     }
     
     .card .name {
-      font-size: 26px;
+      font-size: 24px;
     }
     
     .card .latest .v {
       font-size: 22px;
     }
     
+    .form-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    
     .panel {
       padding: 20px 18px;
     }
     
-    .mode-switch button {
-      padding: 10px 14px;
-      font-size: 12px;
+    .header-actions {
+      width: 100%;
+      justify-content: flex-end;
+      margin-top: 8px;
     }
     
-    .install-banner {
-      padding: 12px 16px;
-      flex-wrap: wrap;
+    .toast {
+      left: 16px;
+      right: 16px;
+      transform: none;
+      bottom: 80px;
+      text-align: center;
     }
     
-    .install-banner-text {
-      font-size: 12px;
-      flex: 1;
+    footer.bot {
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
     }
   }
   
-  /* ---------- Small Mobile (320px) ---------- */
-  @media (max-width: 360px) {
+  /* Safe area for notched phones */
+  @supports (padding: max(0px)) {
     .app {
-      padding: 20px 12px 90px;
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+      padding-bottom: max(100px, env(safe-area-inset-bottom));
     }
     
-    .toolbar .btn {
-      padding: 10px 12px;
-      font-size: 12px;
-    }
-    
-    .btn .plus {
-      display: none;
+    .toast {
+      bottom: max(24px, env(safe-area-inset-bottom));
     }
   }
   
-  /* ---------- Landscape Mobile ---------- */
-  @media (max-height: 500px) and (orientation: landscape) {
-    .app {
-      padding: 20px 16px 40px;
-    }
-    
-    .grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .card .hist {
-      max-height: 120px;
-    }
-  }
-  
-  /* ---------- Touch device optimizations ---------- */
+  /* Touch-friendly tap targets */
   @media (hover: none) and (pointer: coarse) {
-    .btn:hover {
-      background: transparent;
-      color: var(--ink);
+    .btn, .color-swatch, .card .del, .card .hist .rm {
+      min-height: 44px;
+      min-width: 44px;
     }
     
-    .btn-ghost:hover {
-      background: transparent;
-      color: var(--ink-soft);
-    }
-    
-    .card .tag:hover {
-      filter: none;
+    .card .tag {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
     }
   }
   
-  /* ---------- Safe area for notch devices ---------- */
-  @supports (padding-top: env(safe-area-inset-top)) {
-    body {
-      padding-top: env(safe-area-inset-top);
-      padding-left: env(safe-area-inset-left);
-      padding-right: env(safe-area-inset-right);
-    }
+  /* Prevent overscroll bounce on iOS */
+  html {
+    overscroll-behavior: none;
   }
   
-  /* ---------- Dark mode support ---------- */
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --line: #ffffff;
-      --line-soft: #666;
-      --line-xsoft: #333;
-      --bg: #1a1a1a;
-      --ink: #ffffff;
-      --ink-soft: #999;
-      --ink-xsoft: #555;
-    }
-    
-    .card {
-      background: #222;
-    }
-    
-    .color-popover {
-      background: #222;
-      border-color: #444;
-    }
+  /* Smooth scrolling */
+  * {
+    -webkit-overflow-scrolling: touch;
   }
-</style>
+  
+  /* Disable text selection on UI elements */
+  .btn, .color-swatch, .mode-switch button {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* Active state for touch */
+  .btn:active, .color-swatch:active {
+    opacity: 0.7;
+  }
+
+
+    #installBtn {
+      background: linear-gradient(135deg, #4caf50, #2e7d32) !important;
+      color: white !important;
+      font-weight: 600;
+    }
+    #installBtn:hover {
+      background: linear-gradient(135deg, #66bb6a, #388e3c) !important;
+    }
+    #installBtn:not([style*="display: none"]) {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(76, 175, 80, 0); }
+    }
+
+  </style>
+<link rel="apple-touch-startup-image" href="app512.png" />
 </head>
 <body>
 <div class="app">
@@ -772,18 +414,22 @@
   <header class="top">
     <h1>// Battery Manager</h1>
     <div class="meta" id="count">0 units · 0 tests</div>
+    <div class="header-actions">
+      <button class="btn btn-ghost btn-mini" id="exportBtn" title="Export data">Export ↓</button>
+      <button class="btn btn-ghost btn-mini" id="importBtn" title="Import data">Import ↑</button>
+      <button class="btn btn-ghost btn-mini" id="clearBtn">Clear All</button>
+      <button class="btn btn-ghost btn-mini" id="installBtn" onclick="installPWA()" style="display:none" title="安装到桌面">📲 Install</button>
+    </div>
   </header>
 
   <div class="toolbar">
+    <input type="file" id="importFile" accept=".json" style="display:none" />
     <div class="name-field">
       <label for="nameInput">ID</label>
-      <input id="nameInput" maxlength="3" placeholder="ABC" inputmode="text" autocomplete="off">
+      <input id="nameInput" maxlength="3" placeholder="ABC" />
     </div>
-    <button class="btn" id="addBtn"><span class="plus">+</span> Add</button>
-    <button class="btn btn-ghost" id="clearBtn">Clear</button>
-    <button class="btn btn-ghost" id="exportBtn" title="导出数据">↓ Export</button>
-    <button class="btn btn-ghost" id="importBtn" title="导入数据">↑ Import</button>
-    <input type="file" id="importFile" accept=".json" style="display:none;">
+    <button class="btn" id="addBtn"><span class="plus">+</span> Add Battery</button>
+    <button class="btn btn-ghost" id="clearBtn">Clear All</button>
   </div>
 
   <section class="panel" id="panel">
@@ -793,12 +439,12 @@
       <button data-mode="manual">Manual</button>
     </div>
     <div class="form-grid" id="calcGrid">
-      <div class="field"><label>Initial Voltage <span class="u">V₀ (V)</span></label><input type="number" step="0.001" inputmode="decimal" id="v0" placeholder="e.g. 3.700"></div>
-      <div class="field"><label>Series Resistor <span class="u">R (Ω)</span></label><input type="number" step="0.001" inputmode="decimal" id="rExt" placeholder="e.g. 10.0"></div>
-      <div class="field"><label>Loaded Voltage <span class="u">V₁ (V)</span></label><input type="number" step="0.001" inputmode="decimal" id="v1" placeholder="e.g. 3.620"></div>
+      <div class="field"><label>Initial Voltage <span class="u">V₀ (V)</span></label><input type="number" step="0.001" id="v0" placeholder="e.g. 3.700" /></div>
+      <div class="field"><label>Series Resistor <span class="u">R (Ω)</span></label><input type="number" step="0.001" id="rExt" placeholder="e.g. 10.0" /></div>
+      <div class="field"><label>Loaded Voltage <span class="u">V₁ (V)</span></label><input type="number" step="0.001" id="v1" placeholder="e.g. 3.620" /></div>
     </div>
     <div class="form-grid cols-1" id="manualGrid" style="display:none;">
-      <div class="field"><label>Internal Resistance <span class="u">R_int (Ω)</span></label><input type="number" step="0.001" inputmode="decimal" id="rIntManual" placeholder="e.g. 0.085"></div>
+      <div class="field"><label>Internal Resistance <span class="u">R_int (Ω)</span></label><input type="number" step="0.001" id="rIntManual" placeholder="e.g. 0.085" /></div>
     </div>
     <div class="form-actions">
       <button class="btn btn-ghost" id="cancelBtn">Cancel</button>
@@ -808,527 +454,488 @@
 
   <div id="grid" class="grid"></div>
   <div class="empty" id="empty">
-    <b>no batteries yet</b><br>click <b>+ Add</b> to start
+    <b>no batteries yet</b><br/>click <b>+ Add Battery</b> to start
   </div>
 
   <footer class="bot">
     <span>R_int = R · (V₀ − V₁) / V₁</span>
-    <span>v3.1 · tap tag to recolor</span>
-    <button class="btn btn-mini btn-ghost" id="refreshBtn" style="padding: 5px 10px; font-size: 10px;">↻</button>
+    <span>v3.0 · tap a tag to recolor</span>
   </footer>
 </div>
 
-<!-- PWA Install Banner -->
-<div class="install-banner" id="installBanner">
-  <span class="install-banner-text">安装应用到桌面</span>
-  <button class="btn" id="installBtn">安装</button>
-  <button class="dismiss" id="installDismiss">×</button>
-</div>
-
-<script>
-// PWA Install Prompt Handler
-let deferredPrompt = null;
-const installBanner = document.getElementById('installBanner');
-const installBtn = document.getElementById('installBtn');
-const installDismiss = document.getElementById('installDismiss');
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
+<script>  // PWA Install
+  let deferredPrompt = null;
   
-  // 检查是否已经安装过或用户已拒绝
-  const dismissed = localStorage.getItem('install-banner-dismissed');
-  const installed = localStorage.getItem('app-installed');
-  
-  if (!installed && !dismissed) {
-    setTimeout(() => {
-      installBanner.classList.add('show');
-    }, 3000); // 3秒后显示
-  }
-});
-
-installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  
-  if (outcome === 'accepted') {
-    localStorage.setItem('app-installed', 'true');
-    installBanner.classList.remove('show');
-  }
-  
-  deferredPrompt = null;
-});
-
-installDismiss.addEventListener('click', () => {
-  installBanner.classList.remove('show');
-  localStorage.setItem('install-banner-dismissed', 'true');
-});
-
-window.addEventListener('appinstalled', () => {
-  installBanner.classList.remove('show');
-  localStorage.setItem('app-installed', 'true');
-  deferredPrompt = null;
-});
-
-// Register Service Worker with better error handling
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js?t=' + Date.now())
-      .then(reg => {
-        console.log('[App] Service Worker registered:', reg.scope);
-        
-        // 检查更新
-        reg.addEventListener('updatefound', () => {
-          console.log('[App] New Service Worker available');
-          const newSW = reg.installing;
-          if (newSW) {
-            newSW.addEventListener('statechange', (e) => {
-              if (e.target.state === 'installed' && navigator.serviceWorker.controller) {
-                // 新版本已安装，等待激活
-                console.log('[App] New version ready, refresh to update');
-              }
-            });
-          }
-        });
-        
-        // 立即检查更新
-        reg.update();
-      })
-      .catch(err => {
-        console.log('[App] Service Worker registration failed:', err);
-      });
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const btn = document.getElementById('installBtn');
+    if (btn) btn.style.display = 'block';
   });
-}
-
-// Refresh button handler
-document.getElementById('refreshBtn').addEventListener('click', () => {
-  // 通知 Service Worker 跳过等待
-  if (navigator.serviceWorker.controller) {
-    navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' });
-  }
-  // 强制刷新页面
-  window.location.reload(true);
-});
-
-// 检查是否有新版本可用
-if (navigator.serviceWorker) {
-  navigator.serviceWorker.ready.then((reg) => {
-    if (reg.waiting) {
-      // 有新版本等待中
-      console.log('[App] New version waiting to activate');
+  
+  window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    const btn = document.getElementById('installBtn');
+    if (btn) btn.style.display = 'none';
+    showToast('✓ 已安装到桌面！');
+  });
+  
+  async function installPWA() {
+    if (!deferredPrompt) {
+      showToast('请使用浏览器打开后尝试');
+      return;
     }
-  });
-}
-
-// App Logic
-const STORAGE_KEY = "battery-manager:v3";
-const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const ALNUM   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-const PALETTE = [
-  { bg: "#1a1a1a", fg: "#fafaf7" },
-  { bg: "#ffffff", fg: "#1a1a1a" },
-  { bg: "#4a4a4a", fg: "#fafaf7" },
-  { bg: "#e0e0e0", fg: "#1a1a1a" },
-  { bg: "#c5392a", fg: "#ffffff" },
-  { bg: "#d97a1f", fg: "#ffffff" },
-  { bg: "#b8893d", fg: "#ffffff" },
-  { bg: "#6b7a2f", fg: "#ffffff" },
-  { bg: "#2d7a4f", fg: "#ffffff" },
-  { bg: "#1f7a7a", fg: "#ffffff" },
-  { bg: "#2a6dc5", fg: "#ffffff" },
-  { bg: "#1e3a8a", fg: "#ffffff" },
-  { bg: "#6b3a9a", fg: "#ffffff" },
-  { bg: "#9a3a7a", fg: "#ffffff" },
-  { bg: "#c45a8a", fg: "#ffffff" },
-  { bg: "#6b4a2a", fg: "#ffffff" },
-  { bg: "#f4d4d0", fg: "#1a1a1a" },
-  { bg: "#f6e0c2", fg: "#1a1a1a" },
-  { bg: "#f0e8c2", fg: "#1a1a1a" },
-  { bg: "#d4e8d8", fg: "#1a1a1a" },
-  { bg: "#cce4e4", fg: "#1a1a1a" },
-  { bg: "#d0dcec", fg: "#1a1a1a" },
-  { bg: "#e0d4ec", fg: "#1a1a1a" },
-  { bg: "#f0d4e0", fg: "#1a1a1a" },
-];
-const DEFAULT_TAG = PALETTE[0];
-
-let batteries = load();
-let newMode = "calc";
-let openCardId = null;
-let popoverCardId = null;
-
-const $name      = document.getElementById("nameInput");
-const $addBtn    = document.getElementById("addBtn");
-const $clearBtn  = document.getElementById("clearBtn");
-const $panel     = document.getElementById("panel");
-const $panelName = document.getElementById("panelName");
-const $modeSwitch= document.getElementById("modeSwitch");
-const $calcGrid  = document.getElementById("calcGrid");
-const $manualGrid= document.getElementById("manualGrid");
-const $v0        = document.getElementById("v0");
-const $rExt      = document.getElementById("rExt");
-const $v1        = document.getElementById("v1");
-const $rIntManual= document.getElementById("rIntManual");
-const $saveBtn   = document.getElementById("saveBtn");
-const $cancelBtn = document.getElementById("cancelBtn");
-const $grid      = document.getElementById("grid");
-const $empty     = document.getElementById("empty");
-const $count     = document.getElementById("count");
-
-function load() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) { const a = JSON.parse(raw); if (Array.isArray(a)) return a.map(migrate); }
-    for (const k of ["battery-manager:v2", "battery-manager:v1"]) {
-      const v = localStorage.getItem(k);
-      if (v) { const a = JSON.parse(v); if (Array.isArray(a)) return a.map(migrate); }
-    }
-  } catch (e) {}
-  return [];
-}
-function migrate(b) {
-  const out = { id: b.id, addedAt: b.addedAt || nowStr(), tests: [], tagColor: b.tagColor || null };
-  if (b.test && isFinite(b.test.rInt)) {
-    const t = b.test;
-    out.tests.push({ ts: b.addedAt || nowStr(), mode: "calc", v0: t.v0, rExt: t.rExt, v1: t.v1, i: t.i, rInt: t.rInt });
-  }
-  if (Array.isArray(b.tests)) {
-    b.tests.forEach(t => {
-      if (t && isFinite(t.rInt)) out.tests.push(t);
-    });
-  }
-  return out;
-}
-function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(batteries)); }
-function randomId(pool, n = 3) { let s = ""; for (let i = 0; i < n; i++) s += pool[Math.floor(Math.random()*pool.length)]; return s; }
-function uniqueId(pool) { for (let i = 0; i < 50; i++) { const id = randomId(pool); if (!batteries.some(b => b.id === id)) return id; } return randomId(pool) + Date.now().toString().slice(-1); }
-function sanitize(input) { if (!input) return null; const v = input.trim().toUpperCase(); if (v.length !== 3 || !/^[A-Z0-9]{3}$/.test(v)) return null; return v; }
-function fmt(n, d = 4) { if (!isFinite(n)) return "—"; return Number(n).toFixed(d).replace(/0+$/, "").replace(/\.$/, ""); }
-function num(v) { const n = parseFloat(v); return isFinite(n) ? n : NaN; }
-function nowStr() { const d = new Date(); const p = n => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`; }
-function findBattery(id) { return batteries.findIndex(b => b.id === id); }
-function tagColorOf(b) { return b.tagColor || DEFAULT_TAG; }
-function isCurrentColor(b, c) {
-  const cur = b.tagColor;
-  if (!cur) return c === DEFAULT_TAG;
-  return cur.bg === c.bg && cur.fg === c.fg;
-}
-function escapeHTML(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&", "<": "<", ">": ">", '"': """, "'": "'" }[c])); }
-
-function render() {
-  $grid.innerHTML = "";
-  if (batteries.length === 0) { $empty.style.display = "block"; }
-  else { $empty.style.display = "none"; batteries.forEach((b, idx) => $grid.appendChild(card(b, idx))); }
-  const totalTests = batteries.reduce((s, b) => s + b.tests.length, 0);
-  $count.textContent = `${batteries.length} unit${batteries.length === 1 ? "" : "s"} · ${totalTests} test${totalTests === 1 ? "" : "s"}`;
-}
-
-function card(b, idx) {
-  const c = document.createElement("div");
-  c.className = "card";
-  c.dataset.id = b.id;
-  const tc = tagColorOf(b);
-  const latest = b.tests.length ? b.tests[b.tests.length - 1] : null;
-  const modeLabel = latest ? (latest.mode === "calc" ? "CALC" : "MANUAL") : "—";
-
-  c.innerHTML = `
-    <span class="tag" style="background:${tc.bg};color:${tc.fg};" data-act="open-pop">#${String(idx + 1).padStart(2, "0")}</span>
-    <button class="del" title="remove battery">×</button>
-    <div class="id"><span class="dot"></span>${b.tests.length ? "tracked" : "untested"}</div>
-    <div class="name">${escapeHTML(b.id)}</div>
-    <div class="latest">
-      <div class="k">R int · ${modeLabel} · ${latest ? latest.ts.slice(5) : "—"}</div>
-      <div class="v">${latest ? fmt(latest.rInt, 3) + " Ω" : "—"}</div>
-      ${latest && latest.mode === "calc" ? `<div class="sub">V₀ ${latest.v0.toFixed(3)}V · R ${fmt(latest.rExt)}Ω · V₁ ${latest.v1.toFixed(3)}V · I ${fmt(latest.i*1000,2)}mA</div>` : ""}
-      ${latest && latest.mode === "manual" ? `<div class="sub">manually logged</div>` : ""}
-    </div>
-    <div class="history-head"><span>history <span class="count">(${b.tests.length})</span></span></div>
-    ${b.tests.length === 0
-      ? `<div class="hist-empty">no tests yet</div>`
-      : `<ul class="hist">${b.tests.slice().reverse().map((t, i) => `
-          <li>
-            <span class="ts">${t.ts}</span>
-            <span class="mode ${t.mode === "calc" ? "calc" : ""}">${t.mode === "calc" ? "CALC" : "MAN"}</span>
-            <span class="rint">${fmt(t.rInt, 3)} Ω</span>
-            <button class="rm" data-idx="${b.tests.length - 1 - i}" title="remove test">×</button>
-          </li>`).join("")}</ul>`}
-    <div class="add-test">
-      <button class="btn btn-ghost btn-mini" data-act="open-test"><span class="plus">+</span> Test</button>
-    </div>
-    <div class="test-panel" id="tp-${b.id}">
-      <div class="mode-switch" data-ms>
-        <button data-mode="calc" class="active">Calculate</button>
-        <button data-mode="manual">Manual</button>
-      </div>
-      <div class="form-grid" data-cg>
-        <div class="field"><label>V₀ (V)</label><input type="number" step="0.001" inputmode="decimal" data-k="v0" placeholder="3.700" /></div>
-        <div class="field"><label>R (Ω)</label><input type="number" step="0.001" inputmode="decimal" data-k="rExt" placeholder="10.0" /></div>
-        <div class="field"><label>V₁ (V)</label><input type="number" step="0.001" inputmode="decimal" data-k="v1" placeholder="3.620" /></div>
-      </div>
-      <div class="form-grid cols-1" data-mg style="display:none;">
-        <div class="field"><label>R_int (Ω)</label><input type="number" step="0.001" inputmode="decimal" data-k="rInt" placeholder="0.085" /></div>
-      </div>
-      <div class="form-actions">
-        <button class="btn btn-ghost btn-mini" data-act="cancel-test">Cancel</button>
-        <button class="btn btn-mini" data-act="save-test">Save ▸</button>
-      </div>
-    </div>
-  `;
-
-  c.querySelector(".del").addEventListener("click", () => {
-    if (confirm(`Remove battery ${b.id} and all its tests?`)) {
-      batteries.splice(idx, 1);
-      if (openCardId === b.id) openCardId = null;
-      if (popoverCardId === b.id) popoverCardId = null;
-      save(); render();
-    }
-  });
-
-  c.querySelector('[data-act="open-pop"]').addEventListener("click", e => {
-    e.stopPropagation();
-    if (popoverCardId === b.id) { closeAllPopovers(); return; }
-    openPopover(b.id);
-  });
-
-  c.querySelector('[data-act="open-test"]').addEventListener("click", () => {
-    document.querySelectorAll(".card .test-panel.open").forEach(p => p.classList.remove("open"));
-    const tp = c.querySelector(".test-panel");
-    tp.classList.add("open");
-    openCardId = b.id;
-    const firstInput = tp.querySelector("input");
-    if (firstInput) setTimeout(() => firstInput.focus(), 30);
-  });
-  c.querySelector('[data-act="cancel-test"]').addEventListener("click", () => {
-    c.querySelector(".test-panel").classList.remove("open");
-    if (openCardId === b.id) openCardId = null;
-  });
-  c.querySelector('[data-act="save-test"]').addEventListener("click", () => saveTestFor(b.id, c));
-  c.querySelectorAll("[data-ms] button").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const tp = c.querySelector(".test-panel");
-      tp.querySelectorAll("[data-ms] button").forEach(x => x.classList.remove("active"));
-      btn.classList.add("active");
-      if (btn.dataset.mode === "calc") {
-        tp.querySelector("[data-cg]").style.display = "";
-        tp.querySelector("[data-mg]").style.display = "none";
-      } else {
-        tp.querySelector("[data-cg]").style.display = "none";
-        tp.querySelector("[data-mg]").style.display = "";
-      }
-    });
-  });
-  c.querySelectorAll(".hist .rm").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const i = parseInt(btn.dataset.idx, 10);
-      const real = findBattery(b.id);
-      if (real < 0) return;
-      batteries[real].tests.splice(i, 1);
-      save(); render();
-    });
-  });
-  return c;
-}
-
-function closeAllPopovers() {
-  document.querySelectorAll(".color-popover").forEach(p => p.remove());
-  popoverCardId = null;
-}
-function openPopover(id) {
-  closeAllPopovers();
-  const cardEl = document.querySelector(`.card[data-id="${id}"]`);
-  if (!cardEl) return;
-  const b = batteries.find(x => x.id === id);
-  if (!b) return;
-  const pop = document.createElement("div");
-  pop.className = "color-popover";
-  pop.innerHTML = PALETTE.map((c, i) => `
-    <div class="color-swatch ${isCurrentColor(b, c) ? "active" : ""}" data-i="${i}" style="background:${c.bg};${c.bg === "#ffffff" ? "border:1px solid #d0d0d0;" : ""}" title="bg ${c.bg}"></div>
-  `).join("");
-  cardEl.appendChild(pop);
-  popoverCardId = id;
-  pop.addEventListener("click", e => {
-    e.stopPropagation();
-    const sw = e.target.closest(".color-swatch");
-    if (!sw) return;
-    const i = parseInt(sw.dataset.i, 10);
-    const color = PALETTE[i];
-    const real = findBattery(id);
-    if (real < 0) return;
-    batteries[real].tagColor = { bg: color.bg, fg: color.fg };
-    save();
-    closeAllPopovers();
-    render();
-  });
-}
-
-let pending = null;
-function startAdd() {
-  let id = sanitize($name.value);
-  if (!id) {
-    const typed = $name.value.trim();
-    const hasDigit = /\d/.test(typed);
-    id = uniqueId(hasDigit ? ALNUM : LETTERS);
-  } else if (batteries.some(b => b.id === id)) {
-    alert(`ID "${id}" already exists.`); $name.focus(); return;
-  }
-  pending = { id, addedAt: nowStr() };
-  $panelName.textContent = id;
-  $panel.classList.add("open");
-  setMode(newMode);
-  clearNewInputs();
-  setTimeout(() => focusNewFirst(), 30);
-}
-function setMode(m) {
-  newMode = m;
-  $modeSwitch.querySelectorAll("button").forEach(x => x.classList.toggle("active", x.dataset.mode === m));
-  $calcGrid.style.display = (m === "calc") ? "" : "none";
-  $manualGrid.style.display = (m === "manual") ? "" : "none";
-}
-function clearNewInputs() { $v0.value = ""; $rExt.value = ""; $v1.value = ""; $rIntManual.value = ""; }
-function focusNewFirst() { (newMode === "calc" ? $v0 : $rIntManual).focus(); }
-
-function saveNew() {
-  if (!pending) return;
-  const ts = nowStr();
-  let record = null;
-  if (newMode === "calc") {
-    const v0 = num($v0.value), rE = num($rExt.value), v1 = num($v1.value);
-    if (!(v0 > 0 && rE > 0 && v1 > 0)) { alert("Fill in all three positive numbers."); return; }
-    if (v1 >= v0) { alert("V₁ must be smaller than V₀."); return; }
-    const i = v1 / rE, rInt = (v0 - v1) / i;
-    record = { ts, mode: "calc", v0, rExt: rE, v1, i, rInt };
-  } else {
-    const rInt = num($rIntManual.value);
-    if (!(rInt > 0)) { alert("Enter a positive R_int."); return; }
-    record = { ts, mode: "manual", rInt };
-  }
-  batteries.push({ id: pending.id, addedAt: pending.addedAt, tests: [record], tagColor: null });
-  save();
-  pending = null;
-  $panel.classList.remove("open");
-  $name.value = "";
-  render();
-}
-function cancelNew() { pending = null; $panel.classList.remove("open"); }
-
-function saveTestFor(id, cardEl) {
-  const real = findBattery(id);
-  if (real < 0) return;
-  const tp = cardEl.querySelector(".test-panel");
-  const mode = tp.querySelector("[data-ms] button.active").dataset.mode;
-  const get = k => num(tp.querySelector(`[data-k="${k}"]`).value);
-  const ts = nowStr();
-  let record = null;
-  if (mode === "calc") {
-    const v0 = get("v0"), rE = get("rExt"), v1 = get("v1");
-    if (!(v0 > 0 && rE > 0 && v1 > 0)) { alert("Fill in all three positive numbers."); return; }
-    if (v1 >= v0) { alert("V₁ must be smaller than V₀."); return; }
-    const i = v1 / rE, rInt = (v0 - v1) / i;
-    record = { ts, mode: "calc", v0, rExt: rE, v1, i, rInt };
-  } else {
-    const rInt = get("rInt");
-    if (!(rInt > 0)) { alert("Enter a positive R_int."); return; }
-    record = { ts, mode: "manual", rInt };
-  }
-  batteries[real].tests.push(record);
-  save();
-  openCardId = null;
-  render();
-}
-
-$addBtn.addEventListener("click", startAdd);
-$saveBtn.addEventListener("click", saveNew);
-$cancelBtn.addEventListener("click", cancelNew);
-$modeSwitch.addEventListener("click", e => {
-  const btn = e.target.closest("button[data-mode]"); if (!btn) return;
-  setMode(btn.dataset.mode); focusNewFirst();
-});
-$clearBtn.addEventListener("click", () => {
-  if (!batteries.length) return;
-  if (confirm("Remove ALL batteries and their tests?")) { batteries = []; save(); render(); }
-});
-$name.addEventListener("input", () => {
-  $name.value = $name.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 3);
-});
-document.addEventListener("click", e => {
-  if (popoverCardId && !e.target.closest(".color-popover") && !e.target.closest(".tag")) {
-    closeAllPopovers();
-  }
-});
-document.addEventListener("keydown", e => {
-  if (e.key === "Escape") {
-    if (popoverCardId) { closeAllPopovers(); return; }
-    if ($panel.classList.contains("open")) { cancelNew(); return; }
-    if (openCardId) {
-      const c = document.querySelector(`.card[data-id="${openCardId}"] .test-panel`);
-      if (c) c.classList.remove("open");
-      openCardId = null;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    if (outcome === 'accepted') {
+      showToast('✓ 安装成功！');
     }
   }
-  if (e.key === "Enter" && $panel.classList.contains("open")) saveNew();
-});
 
-// Import / Export
-document.getElementById("exportBtn").addEventListener("click", () => {
-  const data = {
-    version: "3.0",
-    exportedAt: new Date().toISOString(),
-    batteries: batteries
-  };
-  const json = JSON.stringify(data, null, 2);
-  const blob = new Blob([json], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  const timestamp = new Date().toISOString().slice(0, 19).replace(/[T:]/g, "-");
-  a.href = url;
-  a.download = `battery-backup-${timestamp}.json`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-});
 
-document.getElementById("importBtn").addEventListener("click", () => {
-  document.getElementById("importFile").click();
-});
+  const STORAGE_KEY = "battery-manager:v3";
+  const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const ALNUM   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-document.getElementById("importFile").addEventListener("change", (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (evt) => {
+  // 24 color combos: 4 neutrals + 12 deep + 8 soft
+  const PALETTE = [
+    { bg: "#1a1a1a", fg: "#fafaf7" }, // 1 black
+    { bg: "#ffffff", fg: "#1a1a1a" }, // 2 white
+    { bg: "#4a4a4a", fg: "#fafaf7" }, // 3 dark grey
+    { bg: "#e0e0e0", fg: "#1a1a1a" }, // 4 light grey
+    { bg: "#c5392a", fg: "#ffffff" }, // 5 red
+    { bg: "#d97a1f", fg: "#ffffff" }, // 6 orange
+    { bg: "#b8893d", fg: "#ffffff" }, // 7 amber
+    { bg: "#6b7a2f", fg: "#ffffff" }, // 8 olive
+    { bg: "#2d7a4f", fg: "#ffffff" }, // 9 green
+    { bg: "#1f7a7a", fg: "#ffffff" }, // 10 teal
+    { bg: "#2a6dc5", fg: "#ffffff" }, // 11 blue
+    { bg: "#1e3a8a", fg: "#ffffff" }, // 12 navy
+    { bg: "#6b3a9a", fg: "#ffffff" }, // 13 purple
+    { bg: "#9a3a7a", fg: "#ffffff" }, // 14 magenta
+    { bg: "#c45a8a", fg: "#ffffff" }, // 15 pink
+    { bg: "#6b4a2a", fg: "#ffffff" }, // 16 brown
+    { bg: "#f4d4d0", fg: "#1a1a1a" }, // 17 soft red
+    { bg: "#f6e0c2", fg: "#1a1a1a" }, // 18 soft orange
+    { bg: "#f0e8c2", fg: "#1a1a1a" }, // 19 soft yellow
+    { bg: "#d4e8d8", fg: "#1a1a1a" }, // 20 soft green
+    { bg: "#cce4e4", fg: "#1a1a1a" }, // 21 soft teal
+    { bg: "#d0dcec", fg: "#1a1a1a" }, // 22 soft blue
+    { bg: "#e0d4ec", fg: "#1a1a1a" }, // 23 soft purple
+    { bg: "#f0d4e0", fg: "#1a1a1a" }, // 24 soft pink
+  ];
+  const DEFAULT_TAG = PALETTE[0]; // black
+
+  // ----- State -----
+  let batteries = load();
+  let newMode = "calc";
+  let openCardId = null;
+  let popoverCardId = null;
+
+  // ----- DOM -----
+  const $name      = document.getElementById("nameInput");
+  const $addBtn    = document.getElementById("addBtn");
+  const $clearBtn  = document.getElementById("clearBtn");
+  const $panel     = document.getElementById("panel");
+  const $panelName = document.getElementById("panelName");
+  const $modeSwitch= document.getElementById("modeSwitch");
+  const $calcGrid  = document.getElementById("calcGrid");
+  const $manualGrid= document.getElementById("manualGrid");
+  const $v0        = document.getElementById("v0");
+  const $rExt      = document.getElementById("rExt");
+  const $v1        = document.getElementById("v1");
+  const $rIntManual= document.getElementById("rIntManual");
+  const $saveBtn   = document.getElementById("saveBtn");
+  const $cancelBtn = document.getElementById("cancelBtn");
+  const $grid      = document.getElementById("grid");
+  const $empty     = document.getElementById("empty");
+  const $count     = document.getElementById("count");
+
+  // ----- Helpers -----
+  function load() {
     try {
-      const data = JSON.parse(evt.target.result);
-      if (!data || !Array.isArray(data.batteries)) {
-        alert("文件格式错误：不是有效的备份文件");
-        return;
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) { const a = JSON.parse(raw); if (Array.isArray(a)) return a.map(migrate); }
+      for (const k of ["battery-manager:v2", "battery-manager:v1"]) {
+        const v = localStorage.getItem(k);
+        if (v) { const a = JSON.parse(v); if (Array.isArray(a)) return a.map(migrate); }
       }
-      const imported = data.batteries;
-      let added = 0, skipped = 0;
-      imported.forEach(b => {
-        const existing = batteries.findIndex(x => x.id === b.id);
-        if (existing >= 0) {
-          skipped++;
+    } catch (e) {}
+    return [];
+  }
+  function migrate(b) {
+    const out = { id: b.id, addedAt: b.addedAt || nowStr(), tests: [], tagColor: b.tagColor || null };
+    if (b.test && isFinite(b.test.rInt)) {
+      const t = b.test;
+      out.tests.push({ ts: b.addedAt || nowStr(), mode: "calc", v0: t.v0, rExt: t.rExt, v1: t.v1, i: t.i, rInt: t.rInt });
+    }
+    if (Array.isArray(b.tests)) {
+      b.tests.forEach(t => {
+        if (t && isFinite(t.rInt)) out.tests.push(t);
+      });
+    }
+    return out;
+  }
+  function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(batteries)); }
+  function randomId(pool, n = 3) { let s = ""; for (let i = 0; i < n; i++) s += pool[Math.floor(Math.random()*pool.length)]; return s; }
+  function uniqueId(pool) { for (let i = 0; i < 50; i++) { const id = randomId(pool); if (!batteries.some(b => b.id === id)) return id; } return randomId(pool) + Date.now().toString().slice(-1); }
+  function sanitize(input) { if (!input) return null; const v = input.trim().toUpperCase(); if (v.length !== 3 || !/^[A-Z0-9]{3}$/.test(v)) return null; return v; }
+  function fmt(n, d = 4) { if (!isFinite(n)) return "—"; return Number(n).toFixed(d).replace(/0+$/, "").replace(/\.$/, ""); }
+  function num(v) { const n = parseFloat(v); return isFinite(n) ? n : NaN; }
+  function nowStr() { const d = new Date(); const p = n => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`; }
+  function findBattery(id) { return batteries.findIndex(b => b.id === id); }
+  function tagColorOf(b) { return b.tagColor || DEFAULT_TAG; }
+  function isCurrentColor(b, c) {
+    const cur = b.tagColor;
+    if (!cur) return c === DEFAULT_TAG;
+    return cur.bg === c.bg && cur.fg === c.fg;
+  }
+  function escapeHTML(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+  // ----- Render -----
+  function render() {
+    $grid.innerHTML = "";
+    if (batteries.length === 0) { $empty.style.display = "block"; }
+    else { $empty.style.display = "none"; batteries.forEach((b, idx) => $grid.appendChild(card(b, idx))); }
+    const totalTests = batteries.reduce((s, b) => s + b.tests.length, 0);
+    $count.textContent = `${batteries.length} unit${batteries.length === 1 ? "" : "s"} · ${totalTests} test${totalTests === 1 ? "" : "s"}`;
+  }
+
+  function card(b, idx) {
+    const c = document.createElement("div");
+    c.className = "card";
+    c.dataset.id = b.id;
+    const tc = tagColorOf(b);
+    const latest = b.tests.length ? b.tests[b.tests.length - 1] : null;
+    const modeLabel = latest ? (latest.mode === "calc" ? "CALC" : "MANUAL") : "—";
+
+    c.innerHTML = `
+      <span class="tag" style="background:${tc.bg};color:${tc.fg};" data-act="open-pop">#${String(idx + 1).padStart(2, "0")}</span>
+      <button class="del" title="remove battery">×</button>
+      <div class="id"><span class="dot"></span>${b.tests.length ? "tracked" : "untested"}</div>
+      <div class="name">${escapeHTML(b.id)}</div>
+      <div class="latest">
+        <div class="k">R int · ${modeLabel} · ${latest ? latest.ts.slice(5) : "—"}</div>
+        <div class="v">${latest ? fmt(latest.rInt, 3) + " Ω" : "—"}</div>
+        ${latest && latest.mode === "calc" ? `<div class="sub">V₀ ${latest.v0.toFixed(3)}V · R ${fmt(latest.rExt)}Ω · V₁ ${latest.v1.toFixed(3)}V · I ${fmt(latest.i*1000,2)}mA</div>` : ""}
+        ${latest && latest.mode === "manual" ? `<div class="sub">manually logged</div>` : ""}
+      </div>
+      <div class="history-head"><span>history <span class="count">(${b.tests.length})</span></span></div>
+      ${b.tests.length === 0
+        ? `<div class="hist-empty">no tests yet</div>`
+        : `<ul class="hist">${b.tests.slice().reverse().map((t, i) => `
+            <li>
+              <span class="ts">${t.ts}</span>
+              <span class="mode ${t.mode === "calc" ? "calc" : ""}">${t.mode === "calc" ? "CALC" : "MAN"}</span>
+              <span class="rint">${fmt(t.rInt, 3)} Ω</span>
+              <button class="rm" data-idx="${b.tests.length - 1 - i}" title="remove test">×</button>
+            </li>`).join("")}</ul>`}
+      <div class="add-test">
+        <button class="btn btn-ghost btn-mini" data-act="open-test"><span class="plus">+</span> Add Test</button>
+      </div>
+      <div class="test-panel" id="tp-${b.id}">
+        <div class="mode-switch" data-ms>
+          <button data-mode="calc" class="active">Calculate</button>
+          <button data-mode="manual">Manual</button>
+        </div>
+        <div class="form-grid" data-cg>
+          <div class="field"><label>V₀ (V)</label><input type="number" step="0.001" data-k="v0" placeholder="3.700" /></div>
+          <div class="field"><label>R (Ω)</label><input type="number" step="0.001" data-k="rExt" placeholder="10.0" /></div>
+          <div class="field"><label>V₁ (V)</label><input type="number" step="0.001" data-k="v1" placeholder="3.620" /></div>
+        </div>
+        <div class="form-grid cols-1" data-mg style="display:none;">
+          <div class="field"><label>R_int (Ω)</label><input type="number" step="0.001" data-k="rInt" placeholder="0.085" /></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-ghost btn-mini" data-act="cancel-test">Cancel</button>
+          <button class="btn btn-mini" data-act="save-test">Save ▸</button>
+        </div>
+      </div>
+    `;
+
+    // delete battery
+    c.querySelector(".del").addEventListener("click", () => {
+      if (confirm(`Remove battery ${b.id} and all its tests?`)) {
+        batteries.splice(idx, 1);
+        if (openCardId === b.id) openCardId = null;
+        if (popoverCardId === b.id) popoverCardId = null;
+        save(); render();
+      }
+    });
+
+    // open tag color popover
+    c.querySelector('[data-act="open-pop"]').addEventListener("click", e => {
+      e.stopPropagation();
+      if (popoverCardId === b.id) { closeAllPopovers(); return; }
+      openPopover(b.id);
+    });
+
+    // add test
+    c.querySelector('[data-act="open-test"]').addEventListener("click", () => {
+      document.querySelectorAll(".card .test-panel.open").forEach(p => p.classList.remove("open"));
+      const tp = c.querySelector(".test-panel");
+      tp.classList.add("open");
+      openCardId = b.id;
+      const firstInput = tp.querySelector("input");
+      if (firstInput) setTimeout(() => firstInput.focus(), 30);
+    });
+    c.querySelector('[data-act="cancel-test"]').addEventListener("click", () => {
+      c.querySelector(".test-panel").classList.remove("open");
+      if (openCardId === b.id) openCardId = null;
+    });
+    c.querySelector('[data-act="save-test"]').addEventListener("click", () => saveTestFor(b.id, c));
+    c.querySelectorAll("[data-ms] button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const tp = c.querySelector(".test-panel");
+        tp.querySelectorAll("[data-ms] button").forEach(x => x.classList.remove("active"));
+        btn.classList.add("active");
+        if (btn.dataset.mode === "calc") {
+          tp.querySelector("[data-cg]").style.display = "";
+          tp.querySelector("[data-mg]").style.display = "none";
         } else {
-          batteries.push(b);
-          added++;
+          tp.querySelector("[data-cg]").style.display = "none";
+          tp.querySelector("[data-mg]").style.display = "";
         }
       });
-      save();
-      render();
-      alert(`导入完成：新增 ${added} 节电池，跳过 ${skipped} 节已存在的电池`);
-    } catch (err) {
-      alert("导入失败：" + err.message);
-    }
-  };
-  reader.readAsText(file);
-  e.target.value = "";
-});
+    });
+    c.querySelectorAll(".hist .rm").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const i = parseInt(btn.dataset.idx, 10);
+        const real = findBattery(b.id);
+        if (real < 0) return;
+        batteries[real].tests.splice(i, 1);
+        save(); render();
+      });
+    });
+    return c;
+  }
 
-render();
+  // ----- Color popover -----
+  function closeAllPopovers() {
+    document.querySelectorAll(".color-popover").forEach(p => p.remove());
+    popoverCardId = null;
+  }
+  function openPopover(id) {
+    closeAllPopovers();
+    const cardEl = document.querySelector(`.card[data-id="${id}"]`);
+    if (!cardEl) return;
+    const b = batteries.find(x => x.id === id);
+    if (!b) return;
+    const pop = document.createElement("div");
+    pop.className = "color-popover";
+    pop.innerHTML = PALETTE.map((c, i) => `
+      <div class="color-swatch ${isCurrentColor(b, c) ? "active" : ""}"
+           data-i="${i}"
+           style="background:${c.bg};${c.bg === "#ffffff" ? "border:1px solid #d0d0d0;" : ""}"
+           title="bg ${c.bg}"></div>
+    `).join("");
+    cardEl.appendChild(pop);
+    popoverCardId = id;
+    pop.addEventListener("click", e => {
+      e.stopPropagation();
+      const sw = e.target.closest(".color-swatch");
+      if (!sw) return;
+      const i = parseInt(sw.dataset.i, 10);
+      const color = PALETTE[i];
+      const real = findBattery(id);
+      if (real < 0) return;
+      batteries[real].tagColor = { bg: color.bg, fg: color.fg };
+      save();
+      closeAllPopovers();
+      render();
+    });
+  }
+
+  // ----- New battery flow -----
+  let pending = null;
+  function startAdd() {
+    let id = sanitize($name.value);
+    if (!id) {
+      const typed = $name.value.trim();
+      const hasDigit = /\d/.test(typed);
+      id = uniqueId(hasDigit ? ALNUM : LETTERS);
+    } else if (batteries.some(b => b.id === id)) {
+      alert(`ID "${id}" already exists.`); $name.focus(); return;
+    }
+    pending = { id, addedAt: nowStr() };
+    $panelName.textContent = id;
+    $panel.classList.add("open");
+    setMode(newMode);
+    clearNewInputs();
+    setTimeout(() => focusNewFirst(), 30);
+  }
+  function setMode(m) {
+    newMode = m;
+    $modeSwitch.querySelectorAll("button").forEach(x => x.classList.toggle("active", x.dataset.mode === m));
+    $calcGrid.style.display = (m === "calc") ? "" : "none";
+    $manualGrid.style.display = (m === "manual") ? "" : "none";
+  }
+  function clearNewInputs() { $v0.value = ""; $rExt.value = ""; $v1.value = ""; $rIntManual.value = ""; }
+  function focusNewFirst() { (newMode === "calc" ? $v0 : $rIntManual).focus(); }
+
+  function saveNew() {
+    if (!pending) return;
+    const ts = nowStr();
+    let record = null;
+    if (newMode === "calc") {
+      const v0 = num($v0.value), rE = num($rExt.value), v1 = num($v1.value);
+      if (!(v0 > 0 && rE > 0 && v1 > 0)) { alert("Fill in all three positive numbers."); return; }
+      if (v1 >= v0) { alert("V₁ must be smaller than V₀."); return; }
+      const i = v1 / rE, rInt = (v0 - v1) / i;
+      record = { ts, mode: "calc", v0, rExt: rE, v1, i, rInt };
+    } else {
+      const rInt = num($rIntManual.value);
+      if (!(rInt > 0)) { alert("Enter a positive R_int."); return; }
+      record = { ts, mode: "manual", rInt };
+    }
+    batteries.push({ id: pending.id, addedAt: pending.addedAt, tests: [record], tagColor: null });
+    save();
+    pending = null;
+    $panel.classList.remove("open");
+    $name.value = "";
+    render();
+  }
+  function cancelNew() { pending = null; $panel.classList.remove("open"); }
+
+  // ----- Add test to existing battery -----
+  function saveTestFor(id, cardEl) {
+    const real = findBattery(id);
+    if (real < 0) return;
+    const tp = cardEl.querySelector(".test-panel");
+    const mode = tp.querySelector("[data-ms] button.active").dataset.mode;
+    const get = k => num(tp.querySelector(`[data-k="${k}"]`).value);
+    const ts = nowStr();
+    let record = null;
+    if (mode === "calc") {
+      const v0 = get("v0"), rE = get("rExt"), v1 = get("v1");
+      if (!(v0 > 0 && rE > 0 && v1 > 0)) { alert("Fill in all three positive numbers."); return; }
+      if (v1 >= v0) { alert("V₁ must be smaller than V₀."); return; }
+      const i = v1 / rE, rInt = (v0 - v1) / i;
+      record = { ts, mode: "calc", v0, rExt: rE, v1, i, rInt };
+    } else {
+      const rInt = get("rInt");
+      if (!(rInt > 0)) { alert("Enter a positive R_int."); return; }
+      record = { ts, mode: "manual", rInt };
+    }
+    batteries[real].tests.push(record);
+    save();
+    openCardId = null;
+    render();
+  }
+
+  // ----- Wire up -----
+  $addBtn.addEventListener("click", startAdd);
+  $saveBtn.addEventListener("click", saveNew);
+  $cancelBtn.addEventListener("click", cancelNew);
+  $modeSwitch.addEventListener("click", e => {
+    const btn = e.target.closest("button[data-mode]"); if (!btn) return;
+    setMode(btn.dataset.mode); focusNewFirst();
+  });
+  $clearBtn.addEventListener("click", () => {
+    if (!batteries.length) return;
+    if (confirm("Remove ALL batteries and their tests?")) { batteries = []; save(); render(); }
+  });
+  $name.addEventListener("input", () => {
+    $name.value = $name.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 3);
+  });
+  document.addEventListener("click", e => {
+    if (popoverCardId && !e.target.closest(".color-popover") && !e.target.closest(".tag")) {
+      closeAllPopovers();
+    }
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+      if (popoverCardId) { closeAllPopovers(); return; }
+      if ($panel.classList.contains("open")) { cancelNew(); return; }
+      if (openCardId) {
+        const c = document.querySelector(`.card[data-id="${openCardId}"] .test-panel`);
+        if (c) c.classList.remove("open");
+        openCardId = null;
+      }
+    }
+    if (e.key === "Enter" && $panel.classList.contains("open")) saveNew();
+  });
+
+  render();
+
+  // ---------- Toast ----------
+  function showToast(msg, type) {
+    var t = document.getElementById('toast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'toast';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.className = 'toast ' + (type || '');
+    void t.offsetWidth;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2500);
+  }
+
+  // ---------- Export ----------
+  document.getElementById('exportBtn').addEventListener('click', function() {
+    var data = {
+      version: 3,
+      exportedAt: new Date().toISOString(),
+      batteries: batteries
+    };
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    var date = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = 'battery-backup-' + date + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Exported successfully', 'success');
+  });
+
+  // ---------- Import ----------
+  document.getElementById('importBtn').addEventListener('click', function() {
+    document.getElementById('importFile').click();
+  });
+
+  document.getElementById('importFile').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      try {
+        var data = JSON.parse(ev.target.result);
+        if (!data.batteries || !Array.isArray(data.batteries)) {
+          throw new Error('Invalid format');
+        }
+        var existingIds = {};
+        batteries.forEach(function(b) { existingIds[b.id] = true; });
+        var newBatteries = data.batteries.filter(function(b) { return !existingIds[b.id]; });
+        batteries = batteries.concat(newBatteries);
+        save();
+        render();
+        showToast('Imported ' + newBatteries.length + ' battery(s)', 'success');
+      } catch (err) {
+        showToast('Import failed: invalid file', 'error');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  });
 </script>
+<!-- Service Worker Registration -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('./sw.js')
+        .then(function(registration) {
+          console.log('SW registered:', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('SW registration failed:', error);
+        });
+    });
+  }
+</script>
+
 </body>
 </html>

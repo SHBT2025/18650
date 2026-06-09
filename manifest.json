@@ -1,51 +1,43 @@
 {
-  "name": "18650 电池内阻管理器",
-  "short_name": "电池管理",
-  "description": "测量、记录和追踪 18650 锂电池的内阻变化",
+  "name": "Battery Manager",
+  "short_name": "Battery",
+  "description": "电池内阻管理与测试记录工具",
   "start_url": "./index.html",
-  "scope": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#1a1a1a",
+  "background_color": "#fafaf7",
   "theme_color": "#1a1a1a",
-  "lang": "zh-CN",
-  "dir": "ltr",
-  "categories": ["utilities", "productivity"],
+  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "512.png",
+      "src": "app512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "512.png",
+      "src": "app512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "192.png",
+      "src": "tubiao192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "192.png",
+      "src": "tubiao192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
-  "shortcuts": [
-    {
-      "name": "添加电池",
-      "short_name": "添加",
-      "description": "快速添加新电池",
-      "url": "./index.html?action=add",
-      "icons": [{ "src": "192.png", "sizes": "192x192" }]
-    }
+  "categories": [
+    "utilities",
+    "productivity"
   ],
-  "screenshots": [],
-  "prefer_related_applications": false
+  "lang": "zh-CN",
+  "scope": "./",
+  "id": "battery-manager"
 }
